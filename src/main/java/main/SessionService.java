@@ -15,16 +15,29 @@ public class SessionService {
 
     }
 
-    public void newSession(String id, UserProfile user) {
-        sessions.put(id, user);
+    public void newSession(String sessionId, UserProfile user) {
+        if (sessions.containsKey(sessionId))
+            System.err.println("Session already exists!");
+        else
+            sessions.put(sessionId, user);
     }
 
-    public UserProfile getUserById(String id) {
-        return sessions.get(id);
+    public UserProfile getUserById(String sessionId) {
+        if (sessions.containsKey(sessionId))
+            return sessions.get(sessionId);
+        else {
+            System.err.println("No session to get");
+            return null;
+        }
     }
 
-    public void deleteSession(String id) {
-        sessions.remove(id);
+    public void deleteSession(String sessionId) {
+        if (sessions.containsKey(sessionId))
+            sessions.remove(sessionId);
+        else {
+            System.err.println("No session to remove");
+        }
+
     }
 
 

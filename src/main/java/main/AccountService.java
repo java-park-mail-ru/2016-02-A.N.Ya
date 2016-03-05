@@ -8,60 +8,63 @@ import java.util.Map;
 
 
 public class AccountService {
-    private static long idCounter;
+    private volatile long idCounter = 0;
 
-    private Map<Long, UserProfile> users = new HashMap<>();
+    private Map<Long, UserProfile> usersById = new HashMap<>();
+    private Map<String, UserProfile> usersByName = new HashMap<>();
 
 
     public AccountService() {
-        users.put(1L, new UserProfile("admin", "admin", "a@a.ru"));
-        users.get(1L).setId(1L);
-        users.put(2L, new UserProfile("guest", "12345", "sg@sg.com"));
-        idCounter = 2;
+        addUser(new UserProfile("admin", "admin", "a@a.ru"));
+        addUser(new UserProfile("guest", "12345", "sg@sg.com"));
     }
 
     public Collection<UserProfile> getAllUsers() {
-        return users.values();
+        return usersById.values();
     }
 
-    public long addUser(UserProfile userProfile) {
-        if (users.containsValue(userProfile)) {
+    public long addUser(UserProfile user) {
+        if (usersById.containsValue(user)) {
             return -1;
         } else {
             idCounter++;
-            users.put(idCounter, userProfile);
-            users.get(idCounter).setId(idCounter);
+            user.setId(idCounter);
+            usersById.put(idCounter, user);
+            usersByName.put(user.getLogin(), user);
             return idCounter;
         }
     }
 
     public UserProfile getUser(long userID) {
-        return users.get(userID);
+        return usersById.get(userID);
     }
 
     public UserProfile getUser(String login) {
-        return users.get(this.getID(login));
+        return usersByName.get(login);
     }
 
-    public boolean modifyUser(long userID, UserProfile userProfile) {
-        if (!users.containsKey(userID))
+    public boolean modifyUser(long userID, UserProfile user) {
+        if (!usersById.containsKey(userID)) {
+            System.err.println("No such user to modify!");
             return false;
-        users.replace(userID, userProfile);
+        }
+        if (! user.getLogin().equals(usersById.get(userID))) {
+            System.err.println("Cannot change username!");
+            return false;
+        }
+        usersById.replace(userID, user);
+        usersByName.replace(user.getLogin(), user);
         return true;
     }
 
     public boolean deleteUser(long userID) {
-        if (users.containsKey(userID)) {
-            users.remove(userID);
+        if (usersById.containsKey(userID)) {
+            usersByName.remove(usersById.get(userID));
+            usersById.remove(userID);
             return true;
+        } else {
+            System.err.println("No such user to delete!");
+            return false;
         }
-        return false;
-    }
-
-    private long getID(String login) {
-        for (Map.Entry<Long, UserProfile> user: users.entrySet())
-            if (user.getValue().getLogin() == login)
-                return user.getKey();
-        return -1;
     }
 }

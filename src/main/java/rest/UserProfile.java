@@ -10,7 +10,7 @@ public class UserProfile {
     private String login;
     @NotNull
     private String password;
-    @NotNull
+
     private String email;
 
     public UserProfile() {
@@ -20,14 +20,15 @@ public class UserProfile {
         email = "";
     }
 
-    public UserProfile(@NotNull String login, @NotNull String password, @NotNull String email) {
+    public UserProfile(@NotNull String login, @NotNull String password) {
+        this.id = 0;
         this.login = login;
         this.password = password;
-        this.email = email;
+        this.email = "NULL";
     }
 
-    public UserProfile(long id, @NotNull String login, @NotNull String password, @NotNull String email) {
-        this.id = id;
+    public UserProfile(@NotNull String login, @NotNull String password, String email) {
+        this.id = 0;
         this.login = login;
         this.password = password;
         this.email = email;
@@ -59,38 +60,27 @@ public class UserProfile {
         this.password = password;
     }
 
-    @NotNull
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotNull String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-
-
     @Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || getClass() != other.getClass()) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        UserProfile that = (UserProfile) other;
+        UserProfile that = (UserProfile) o;
 
         return login.equals(that.login);
+
     }
 
     @Override
     public int hashCode() {
         return login.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "\"id\" : " + id +
-                ", \"login\" : \"" + password + '\"' +
-                ", \"email\" : \"" + email + '\"' +
-                "}";
     }
 }

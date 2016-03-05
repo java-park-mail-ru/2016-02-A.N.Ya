@@ -30,6 +30,7 @@ public class Sessions {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response isLogged(@Context HttpServletRequest request) {
+        System.out.println("Request is logged");
         String id = request.getSession().getId();
         UserProfile user = sessionService.getUserById(id);
         if ( user == null )
@@ -40,11 +41,12 @@ public class Sessions {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(@FormParam("login") String login,
-                          @FormParam("password") String password,
-                          @Context HttpServletRequest request){
-        UserProfile user = accountService.getUser(login);
-        if (user.getPassword() == password){
+    public Response login(UserProfile session, @Context HttpServletRequest request){
+        System.out.println("Request login " + session.getLogin());
+        UserProfile user = accountService.getUser(session.getLogin());
+        if (user == null)
+            System.err.println("No such user!");
+        if ((user != null) && (user.getPassword().equals(session.getPassword()))){
             sessionService.newSession(request.getSession().getId(), user);
             return Response.status(Response.Status.OK).entity("{ \"id\": " + user.getId() + "}").build();
         } else {
@@ -54,6 +56,7 @@ public class Sessions {
 
     @DELETE
     public Response logout(@Context HttpServletRequest request){
+        System.out.println("Request logout");
         String id = request.getSession().getId();
         sessionService.deleteSession(id);
         return Response.status(Response.Status.OK).build();
