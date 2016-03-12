@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class UserProfile {
-    @SuppressWarnings("InstanceVariableNamingConvention")
     private long id;
     @NotNull
     private String login;
@@ -13,20 +12,6 @@ public class UserProfile {
     private String password;
 
     private String email;
-
-    public UserProfile() {
-        id = 0;
-        login = "";
-        password = "";
-        email = "";
-    }
-
-    public UserProfile(@NotNull String login, @NotNull String password) {
-        this.id = 0;
-        this.login = login;
-        this.password = password;
-        this.email = "NULL";
-    }
 
     public UserProfile(@NotNull String login, @NotNull String password, String email) {
         this.id = 0;
@@ -74,7 +59,7 @@ public class UserProfile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserProfile that = (UserProfile) o;
+        final UserProfile that = (UserProfile) o;
 
         return login.equals(that.login);
 

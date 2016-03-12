@@ -43,6 +43,7 @@ public class AccountService {
         return usersByName.get(login);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public boolean modifyUser(long userID, UserProfile user) {
         if (!usersById.containsKey(userID)) {
             System.err.println("No such user to modify!");

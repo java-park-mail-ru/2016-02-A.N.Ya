@@ -16,8 +16,8 @@ public class RestApplication extends Application {
     @Override
     public Set<Object> getSingletons() {
         final HashSet<Object> objects = new HashSet<>();
-        AccountService accountService = new AccountService();
-        SessionService sessionService = new SessionService();
+        final AccountService accountService = new AccountService();
+        final SessionService sessionService = new SessionService();
 
         objects.add(new Users(accountService, sessionService));
         objects.add(new Sessions(accountService, sessionService));
