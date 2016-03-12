@@ -1,5 +1,6 @@
 package main;
 
+import org.jetbrains.annotations.Nullable;
 import rest.UserProfile;
 
 import java.util.HashMap;
@@ -9,11 +10,7 @@ import java.util.Map;
  * Created by morev on 03.03.16.
  */
 public class SessionService {
-    private Map<String, UserProfile> sessions = new HashMap<>();
-
-    public SessionService() {
-
-    }
+    private final Map<String, UserProfile> sessions = new HashMap<>();
 
     public void newSession(String sessionId, UserProfile user) {
         if (sessions.containsKey(sessionId))
@@ -22,6 +19,7 @@ public class SessionService {
             sessions.put(sessionId, user);
     }
 
+    @Nullable
     public UserProfile getUserById(String sessionId) {
         if (sessions.containsKey(sessionId))
             return sessions.get(sessionId);

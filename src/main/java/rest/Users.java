@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
@@ -16,8 +15,8 @@ import java.util.Collection;
 @Singleton
 @Path("/user")
 public class Users {
-    private AccountService accountService;
-    private SessionService sessionService;
+    private final AccountService accountService;
+    private final SessionService sessionService;
 
     public Users(AccountService accountService, SessionService sessionService) {
         this.accountService = accountService;
@@ -28,10 +27,10 @@ public class Users {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(UserProfile user){
-        System.out.println("Request create \"" + user.getLogin() + "\"");
+        System.out.println("Request create \"" + user.getLogin() + '"');
         long id = accountService.addUser(user);
         if(id != -1){
-            return Response.status(Response.Status.OK).entity("{ \"id\": " + id + "}").build();
+            return Response.status(Response.Status.OK).entity("{ \"id\": " + id + '}').build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
@@ -61,10 +60,10 @@ public class Users {
     public Response modifyUser(UserProfile user, @PathParam("id") long id, @Context HttpServletRequest request){
         UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
         UserProfile modyfyedUser = accountService.getUser(id);
-        System.out.println("Request modify \"" + modyfyedUser.getLogin() + "\"");
+        System.out.println("Request modify \"" + modyfyedUser.getLogin() + '"');
 
         if (modyfyedUser.equals(sessionUser)
-                && user.getLogin() == modyfyedUser.getLogin()) {
+                && user.getLogin().equals(modyfyedUser.getLogin())) {
             accountService.modifyUser(id, user);
             return Response.status(Response.Status.OK).build();
         } else {

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class UserProfile {
+    @SuppressWarnings("InstanceVariableNamingConvention")
     private long id;
     @NotNull
     private String login;

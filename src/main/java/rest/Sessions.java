@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,8 +17,8 @@ import javax.ws.rs.core.Response;
 @Singleton
 @Path("/session")
 public class Sessions {
-    private AccountService accountService;
-    private SessionService sessionService;
+    private final AccountService accountService;
+    private final SessionService sessionService;
 
 
     public Sessions(AccountService accountService, SessionService sessionService) {
@@ -36,7 +35,7 @@ public class Sessions {
         if ( user == null )
             return Response.status(Response.Status.UNAUTHORIZED).build();
         else
-            return Response.status(Response.Status.OK).entity("{ \"id\": " + id + "}").build();
+            return Response.status(Response.Status.OK).entity("{ \"id\": " + id + '}').build();
     }
 
     @PUT
@@ -48,7 +47,7 @@ public class Sessions {
             System.err.println("No such user!");
         if ((user != null) && (user.getPassword().equals(session.getPassword()))){
             sessionService.newSession(request.getSession().getId(), user);
-            return Response.status(Response.Status.OK).entity("{ \"id\": " + user.getId() + "}").build();
+            return Response.status(Response.Status.OK).entity("{ \"id\": " + user.getId() + '}').build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();
         }

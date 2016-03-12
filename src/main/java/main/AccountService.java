@@ -10,8 +10,8 @@ import java.util.Map;
 public class AccountService {
     private volatile long idCounter = 0;
 
-    private Map<Long, UserProfile> usersById = new HashMap<>();
-    private Map<String, UserProfile> usersByName = new HashMap<>();
+    private final Map<Long, UserProfile> usersById = new HashMap<>();
+    private final Map<String, UserProfile> usersByName = new HashMap<>();
 
 
     public AccountService() {
@@ -48,7 +48,7 @@ public class AccountService {
             System.err.println("No such user to modify!");
             return false;
         }
-        if (! user.getLogin().equals(usersById.get(userID))) {
+        if (! user.getLogin().equals(usersById.get(userID).getLogin())) {
             System.err.println("Cannot change username!");
             return false;
         }
@@ -59,7 +59,7 @@ public class AccountService {
 
     public boolean deleteUser(long userID) {
         if (usersById.containsKey(userID)) {
-            usersByName.remove(usersById.get(userID));
+            usersByName.remove(usersById.get(userID).getLogin());
             usersById.remove(userID);
             return true;
         } else {
