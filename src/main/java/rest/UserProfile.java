@@ -59,9 +59,9 @@ public class UserProfile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final UserProfile that = (UserProfile) o;
+        final UserProfile another = (UserProfile) o;
 
-        return login.equals(that.login);
+        return login.equals(another.login);
 
     }
 
