@@ -1,7 +1,7 @@
 package rest;
 
 import org.jetbrains.annotations.NotNull;
-
+import org.jetbrains.annotations.Nullable;
 
 
 public class UserProfile {
@@ -12,6 +12,10 @@ public class UserProfile {
     private String password;
 
     private String email;
+
+    public UserProfile() {
+
+    }
 
     public UserProfile(@NotNull String login, @NotNull String password, String email) {
         this.id = 0;
@@ -55,7 +59,7 @@ public class UserProfile {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
