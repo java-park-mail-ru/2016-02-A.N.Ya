@@ -1,14 +1,18 @@
 package main;
 
+import services.AccountService;
+import services.AccountServiceOnHashMap;
+import services.SessionService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
-
-
+import rest.RestApplication;
 
 
 public class Main {
+    public static Context context;
+
     @SuppressWarnings("OverlyBroadThrowsClause")
     public static void main(String[] args) throws Exception {
         int port = -1;
@@ -25,11 +29,20 @@ public class Main {
         final ServletContextHandler contextHandler =
                 new ServletContextHandler(server, "/api/", ServletContextHandler.SESSIONS);
 
-        final ServletHolder servletHolder = new ServletHolder(ServletContainer.class);
-        servletHolder.setInitParameter("javax.ws.rs.Application","main.RestApplication");
+        context = new Context();
+        context.add(AccountService.class, new AccountServiceOnHashMap());
+        context.add(SessionService.class, new SessionService());
 
+        final ServletHolder servletHolder = new ServletHolder(ServletContainer.class);
+        servletHolder.setInitParameter("javax.ws.rs.Application", RestApplication.class.getCanonicalName());
+
+
+        //servletHolder.
         contextHandler.addServlet(servletHolder, "/*");
+
+
         server.start();
+        System.out.println("Server started");
         server.join();
     }
 }

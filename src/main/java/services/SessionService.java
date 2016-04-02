@@ -1,4 +1,4 @@
-package main;
+package services;
 
 import org.jetbrains.annotations.Nullable;
 import rest.UserProfile;
@@ -12,11 +12,17 @@ import java.util.Map;
 public class SessionService {
     private final Map<String, UserProfile> sessions = new HashMap<>();
 
+    public SessionService() {
+        this.newSession("mock_id", new UserProfile("admin", "admin", "a@a.com"));
+    }
+
     public void newSession(String sessionId, UserProfile user) {
         if (sessions.containsKey(sessionId))
             System.err.println("Session already exists!");
-        else
+        else {
             sessions.put(sessionId, user);
+            System.out.println("New session " + sessionId + " of " + user.getLogin());
+        }
     }
 
     @Nullable

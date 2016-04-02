@@ -1,4 +1,4 @@
-package main;
+package services;
 
 import rest.UserProfile;
 
@@ -7,20 +7,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class AccountService {
+public class AccountServiceOnHashMap implements AccountService {
     private volatile long idCounter = 0;
 
     private final Map<Long, UserProfile> usersById = new HashMap<>();
     private final Map<String, UserProfile> usersByName = new HashMap<>();
 
 
-    public AccountService() {
-        addUser(new UserProfile("admin", "admin", "a@a.ru"));
+    public AccountServiceOnHashMap() {
+        addUser(new UserProfile("adm    in", "admin", "a@a.ru"));
         addUser(new UserProfile("guest", "12345", "sg@sg.com"));
     }
 
     public Collection<UserProfile> getAllUsers() {
         return usersById.values();
+    }
+
+    public UserProfile getUser(long userID) {
+        return usersById.get(userID);
+    }
+
+    public UserProfile getUser(String login) {
+        return usersByName.get(login);
     }
 
     public long addUser(UserProfile user) {
@@ -33,14 +41,6 @@ public class AccountService {
             usersByName.put(user.getLogin(), user);
             return idCounter;
         }
-    }
-
-    public UserProfile getUser(long userID) {
-        return usersById.get(userID);
-    }
-
-    public UserProfile getUser(String login) {
-        return usersByName.get(login);
     }
 
     @SuppressWarnings("UnusedReturnValue")

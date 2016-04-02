@@ -1,7 +1,7 @@
 package rest;
 
-import main.AccountService;
-import main.SessionService;
+import services.AccountService;
+import services.SessionService;
 
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
