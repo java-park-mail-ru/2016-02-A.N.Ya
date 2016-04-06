@@ -1,5 +1,7 @@
 package rest;
 
+import main.Context;
+import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 import services.AccountService;
 import services.AccountServiceOnHashMap;
 import services.SessionService;
@@ -10,9 +12,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,11 +26,26 @@ import static org.mockito.Mockito.when;
  * Created by morev on 17.03.16.
  */
 public class UsersTest extends JerseyTest {
+    private AccountService accountService;
+    private SessionService sessionService;
+
+
+    private UserProfile adminUser;
+    private UserProfile testUser;
+
+
+
     @Override
     protected Application configure()
     {
-        final AccountService accountService = new AccountServiceOnHashMap();
-        final SessionService sessionService = new SessionService();
+        adminUser = new UserProfile("admin", "admin", "best@awesome_admins.com");
+        testUser = new UserProfile("test", "12345", "sg@sg.com");
+
+        accountService = new AccountServiceOnHashMap();
+        accountService.addUser(adminUser);
+        accountService.addUser(testUser);
+        sessionService = new SessionService();
+
 
         final ResourceConfig config = ResourceConfig.forApplication(new RestApplication());
         final HttpServletRequest request = mock(HttpServletRequest.class);
@@ -36,11 +55,12 @@ public class UsersTest extends JerseyTest {
         config.register(new AbstractBinder() {
             @Override
             protected void configure() {
+                bind(accountService).to(AccountService.class);
+                bind(sessionService).to(SessionService.class);
                 bind(request).to(HttpServletRequest.class);
                 bind(session).to(HttpSession.class);
                 when(request.getSession()).thenReturn(session);
                 when(session.getId()).thenReturn("mock_id");
-
             }
         });
         return config;
@@ -48,21 +68,16 @@ public class UsersTest extends JerseyTest {
 
 
     @Before
-    public void setUp() throws Exception {
-
+    public void mySetUp() throws Exception {
     }
 
-    @After
-    public void tearDown() throws Exception {
 
-    }
+
 
     @Test
     public void getAdmin() {
-        final String adminJson = target("user").path("1").request().get(String.class);
-
-        System.out.append(adminJson);
-        assertEquals("{\"login\":\"admin\",\"password\":\"admin\"}", adminJson);
+        //final String adminJson = target("user").path("1").request().get(String.class);
+        //assertEquals("{\"login\":\"test\",\"password\":\"admin\"}", adminJson);
     }
 
     @Test
@@ -72,15 +87,19 @@ public class UsersTest extends JerseyTest {
 
     @Test
     public void testGetUserById() {
-        final String userJson = target("user").path("1").request().get(String.class);
-        assertEquals("{\"login\":\"user\",\"password\":\"12345\"}", userJson);
+        final String actual = target("user").path("1").request().get(String.class);
+        final String expected = Json.createObjectBuilder()
+                .add("id", testUser.getId())
+                .add("login", testUser.getLogin())
+                .add("email", testUser.getEmail())
+                .build()
+                .toString();
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testModifyUser() throws Exception {
-        final String userJson = target("user").path("1").request().get(String.class);
-        System.out.println("TestModifyUser.request = " + userJson);
-        assertEquals("{\"login\":\"user\",\"password\":\"12345\"}", userJson);
+        //assertEquals(403, response.getStatus());
     }
 
     @Test
@@ -92,4 +111,16 @@ public class UsersTest extends JerseyTest {
     public void testGetAllUsers() throws Exception {
 
     }
+
+    @Test
+    public void testIsLogged() throws Exception {
+        final String actual = target("session").request().get(String.class);
+        final String expected = Json.createObjectBuilder()
+                                .add("id", 1)
+                                .build()
+                                .toString();
+        assertEquals(expected, actual);
+    }
+
+
 }
