@@ -1,13 +1,10 @@
 package main;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rest.UserProfile;
 import services.AccountService;
-import services.AccountServiceOnHashMap;
+import services.AccountServiceOnHibernate;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -30,7 +27,7 @@ public class AccountServiceTest {
 
     @Before
     public void mySetUp() {
-        accountService = new AccountServiceOnHashMap();
+        accountService = new AccountServiceOnHibernate();
 
         adminUser = new UserProfile("admin", "admin", "best@awesome_admins.com");
         testUser = new UserProfile("test", "12345", "sg@sg.com");
@@ -39,7 +36,7 @@ public class AccountServiceTest {
         accountService.addUser(adminUser);
         accountService.addUser(testUser);
 
-        userProfiles = new ArrayList<UserProfile>();
+        userProfiles = new ArrayList<>();
         userProfiles.add(adminUser);
         userProfiles.add(testUser);
     }
@@ -47,6 +44,7 @@ public class AccountServiceTest {
     @Test
     public void testGetAllUsers() {
         Collection<UserProfile> actual = accountService.getAllUsers();
+        assertTrue( actual != null);
         assertTrue( actual.containsAll(userProfiles) );
         assertTrue( userProfiles.containsAll(actual));
     }
@@ -61,6 +59,12 @@ public class AccountServiceTest {
     public void testGetExistingUserById() {
         UserProfile actual = accountService.getUser(testUser.getId());
         assertEquals(testUser, actual);
+    }
+
+    @Test
+    public void testGetFirstUserById() {
+        UserProfile actual = accountService.getUser(1);
+        assertEquals(adminUser, actual);
     }
 
     @Test
@@ -125,7 +129,6 @@ public class AccountServiceTest {
         boolean result = accountService.modifyUser(testUser.getId(), modifyedUser);
         assertTrue(result);
         assertTrue(accountService.getAllUsers().contains(modifyedUser));
-        ///assertFalse(accountService.getAllUsers().contains(testUser)); TODO // FIXME: 06.04.16 
     }
 
     @Test

@@ -1,17 +1,24 @@
 package main;
 
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.server.ResourceConfig;
+import rest.Sessions;
+import rest.Users;
 import services.AccountService;
-import services.AccountServiceOnHashMap;
+import services.AccountServiceOnHibernate;
 import services.SessionService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
-import rest.RestApplication;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Main {
-    public static Context context;
+    private static Context context;
+
     @SuppressWarnings("OverlyBroadThrowsClause")
     public static void main(String[] args) throws Exception {
         int port = -1;
@@ -29,23 +36,36 @@ public class Main {
                 new ServletContextHandler(server, "/api/", ServletContextHandler.SESSIONS);
 
 
+        AccountServiceOnHibernate accountService = new AccountServiceOnHibernate();
+        SessionService sessionService = new SessionService();
 
-        final ServletHolder servletHolder = new ServletHolder(ServletContainer.class);
-        servletHolder.setInitParameter("javax.ws.rs.Application", RestApplication.class.getCanonicalName());
+        if(!accountService.isConnected()) {
+            System.err.println("Couldn't connect to database");
+            System.exit(1);
+        }
 
+        context = new Context();
+        context.add(AccountService.class, accountService);
+        context.add(SessionService.class, sessionService);
 
-        //servletHolder.
+        Set<Class<?>> classes = new HashSet<>();
+        classes.add(Users.class);
+        classes.add(Sessions.class);
+        final ResourceConfig config = new ResourceConfig(classes);
+        config.register(new AbstractBinder() {
+            @Override
+            protected void configure() {
+                bind(context).to(Context.class);
+            }
+        });
+
+        final ServletHolder servletHolder = new ServletHolder(new ServletContainer(config));
+
         contextHandler.addServlet(servletHolder, "/*");
-
+        server.setHandler(contextHandler);
 
         server.start();
         System.out.println("Server started");
         server.join();
-    }
-
-    public static void initContext() {
-        context = new Context();
-        context.add(AccountService.class, new AccountServiceOnHashMap());
-        context.add(SessionService.class, new SessionService());
     }
 }

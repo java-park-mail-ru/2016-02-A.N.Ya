@@ -1,14 +1,9 @@
 package main;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rest.UserProfile;
-import services.AccountServiceOnHashMap;
 import services.SessionService;
 
-import javax.validation.constraints.AssertTrue;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,38 +19,37 @@ public class SessionServiceTest {
 
     private Map<String, UserProfile> sessions;
 
-    private UserProfile adminUser;
     private UserProfile testUser;
 
-    private String session_id_admin;
-    private String session_id_1;
-    private String session_id_non_existing;
+
+    private String sessionIdAdmin;
+    private String sessionId1;
+    private String sessionIdNonExisting;
 
 
     @Before
     public void mySetUp() {
         sessionService = new SessionService();
 
-        session_id_admin = "session_id_admin";
-        session_id_1 = "session_id_1";
-        session_id_non_existing = "session_id_non_existing";
+        sessionIdAdmin = "sessionIdAdmin";
+        sessionId1 = "sessionId1";
+        sessionIdNonExisting = "sessionIdNonExisting";
 
-        adminUser = new UserProfile("admin", "admin", "best@awesome_admins.com");
+        UserProfile adminUser = new UserProfile("admin", "admin", "best@awesome_admins.com");
         adminUser.setId(1);
         testUser = new UserProfile("test", "12345", "sg@sg.com");
         testUser.setId(2);
 
 
 
-        sessions = new HashMap<String, UserProfile>();
-        sessions.put(session_id_admin, adminUser);
-        sessions.put(session_id_1, testUser);
+        sessions = new HashMap<>();
+        sessions.put(sessionIdAdmin, adminUser);
+        sessions.put(sessionId1, testUser);
 
-        // TODO FIX
         sessionService.deleteSession("mock_id");
 
-        sessionService.newSession(session_id_admin, adminUser);
-        sessionService.newSession(session_id_1, testUser);
+        sessionService.newSession(sessionIdAdmin, adminUser);
+        sessionService.newSession(sessionId1, testUser);
     }
 
 
@@ -75,43 +69,44 @@ public class SessionServiceTest {
 
     @Test
     public void testNewExistingSession() {
-        assertTrue(sessionService.getAllSessions().containsKey(session_id_1));
-        sessionService.newSession(session_id_1, testUser);
-        assertTrue(sessionService.getAllSessions().containsKey(session_id_1));
+        assertTrue(sessionService.getAllSessions().containsKey(sessionId1));
+        sessionService.newSession(sessionId1, testUser);
+        assertTrue(sessionService.getAllSessions().containsKey(sessionId1));
     }
 
     @Test
     public void testNewSession() {
-        assertFalse(sessionService.getAllSessions().containsKey(session_id_non_existing));
-        sessionService.newSession(session_id_non_existing, testUser);
-        assertTrue(sessionService.getAllSessions().containsKey(session_id_non_existing));
+        assertFalse(sessionService.getAllSessions().containsKey(sessionIdNonExisting));
+        sessionService.newSession(sessionIdNonExisting, testUser);
+        assertTrue(sessionService.getAllSessions().containsKey(sessionIdNonExisting));
     }
 
     @Test
-    public void testGetUserByNonExistingSessionId() {
-        assertFalse(sessionService.getAllSessions().containsKey(session_id_non_existing));
-        UserProfile userProfile = sessionService.getUserById(session_id_non_existing);
+    public void testGetUserByNonExistingId() {
+        assertFalse(sessionService.getAllSessions().containsKey(sessionIdNonExisting));
+        UserProfile userProfile = sessionService.getUserById(sessionIdNonExisting);
         assertEquals(null, userProfile);
     }
 
     @Test
     public void testGetUserBySessionId() {
-        assertTrue(sessionService.getAllSessions().containsKey(session_id_1));
-        UserProfile userProfile = sessionService.getUserById(session_id_1);
+        assertTrue(sessionService.getAllSessions().containsKey(sessionId1));
+        assertTrue(sessionService.getAllSessions().containsKey(sessionIdAdmin));
+        UserProfile userProfile = sessionService.getUserById(sessionId1);
         assertEquals(testUser, userProfile);
     }
 
     @Test
     public void testDeleteNonExistingSession() {
-        assertFalse(sessionService.getAllSessions().containsKey(session_id_non_existing));
-        sessionService.deleteSession(session_id_non_existing);
-        assertFalse(sessionService.getAllSessions().containsKey(session_id_non_existing));
+        assertFalse(sessionService.getAllSessions().containsKey(sessionIdNonExisting));
+        sessionService.deleteSession(sessionIdNonExisting);
+        assertFalse(sessionService.getAllSessions().containsKey(sessionIdNonExisting));
     }
 
     @Test
     public void testDeleteSession() {
-        assertTrue(sessionService.getAllSessions().containsKey(session_id_1));
-        sessionService.deleteSession(session_id_1);
-        assertFalse(sessionService.getAllSessions().containsKey(session_id_1));
+        assertTrue(sessionService.getAllSessions().containsKey(sessionId1));
+        sessionService.deleteSession(sessionId1);
+        assertFalse(sessionService.getAllSessions().containsKey(sessionId1));
     }
 }

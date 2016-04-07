@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by morev on 01.04.16.
  */
 public class Context {
-    private Map<Class, Object> contextMap = new HashMap<>();
+    private final Map<Class, Object> contextMap = new HashMap<>();
 
     public void add(Class<?> clazz, Object object) {
         if (!contextMap.containsKey(clazz)) {

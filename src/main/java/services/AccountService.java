@@ -1,6 +1,6 @@
 package services;
 
-import rest.UserProfile;
+import main.UserProfile;
 
 import java.util.Collection;
 

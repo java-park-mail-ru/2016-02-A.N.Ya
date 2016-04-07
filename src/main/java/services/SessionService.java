@@ -1,7 +1,7 @@
 package services;
 
 import org.jetbrains.annotations.Nullable;
-import rest.UserProfile;
+import main.UserProfile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,22 +13,18 @@ public class SessionService {
     private final Map<String, UserProfile> sessions = new HashMap<>();
 
     public SessionService() {
-        this.newSession("mock_id", new UserProfile("admin", "admin", "a@a.com"));
+        System.out.println("SessionService - SessionService");
     }
 
     public void newSession(String sessionId, UserProfile user) {
-        System.out.println("SessionService - newSession \"" + sessionId + "\", login \"" + user.getLogin() + "\"");
-        if (sessions.containsKey(sessionId))
-            System.err.println("    session already exists");
-        else {
-            sessions.put(sessionId, user);
-            System.out.println("    created session with id \"" + sessionId + "\" of login\"" + user.getLogin() + "\"");
-        }
+        System.out.println("SessionService - newSession \"" + sessionId + "\", login \"" + user.getLogin() + '"');
+        sessions.put(sessionId, user);
+        System.out.println("    created session with id \"" + sessionId + "\" of login\"" + user.getLogin() + '"');
     }
 
     @Nullable
     public UserProfile getUserById(String sessionId) {
-        System.out.println("SessionService - getUserById \"" + sessionId + "\"");
+        System.out.println("SessionService - getUserById \"" + sessionId + '"');
         if (sessions.containsKey(sessionId)) {
             final UserProfile userProfile = sessions.get(sessionId);
             System.out.println("    found user \"" + userProfile.getId() + "\" with login " + userProfile.getLogin());
@@ -36,12 +32,13 @@ public class SessionService {
         }
         else {
             System.out.println("    no such id");
+            System.out.println("    num of sessions = " + sessions.size());
             return null;
         }
     }
 
     public void deleteSession(String sessionId) {
-        System.out.println("SessionService - deleteSession \"" + sessionId + "\"");
+        System.out.println("SessionService - deleteSession \"" + sessionId + '"');
         if (sessions.containsKey(sessionId)) {
             System.out.println("    success");
             sessions.remove(sessionId);

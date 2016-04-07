@@ -1,6 +1,7 @@
 package services;
 
-import rest.UserProfile;
+import org.jetbrains.annotations.Nullable;
+import main.UserProfile;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,26 +16,32 @@ public class AccountServiceOnHashMap implements AccountService {
 
 
     public AccountServiceOnHashMap() {
-
+        System.out.println("AccountService - AccountService");
     }
 
+    @Override
     public Collection<UserProfile> getAllUsers() {
         System.out.println("AccountServiceOnHashMap - getAllUsers");
         return usersById.values();
     }
 
+    @Override
+    @Nullable
     public UserProfile getUser(long userID) {
         System.out.println("AccountServiceOnHashMap - getUser " + userID);
         return usersById.get(userID);
     }
 
+    @Override
+    @Nullable
     public UserProfile getUser(String login) {
-        System.out.println("AccountServiceOnHashMap - getUser \"" + login + "\"");
+        System.out.println("AccountServiceOnHashMap - getUser \"" + login + '"');
         return usersByName.get(login);
     }
 
+    @Override
     public long addUser(UserProfile user) {
-        System.out.println("AccountServiceOnHashMap - addUser \"" + user.getLogin() + "\"");
+        System.out.println("AccountServiceOnHashMap - addUser \"" + user.getLogin() + '"');
         if (usersById.containsValue(user)) {
             System.out.println("    already exists");
             return -1;
@@ -48,7 +55,7 @@ public class AccountServiceOnHashMap implements AccountService {
         }
     }
 
-    @SuppressWarnings("UnusedReturnValue")
+    @Override
     public boolean modifyUser(long userID, UserProfile user) {
         System.out.println("AccountServiceOnHashMap - modifyUser");
         if (!usersById.containsKey(userID)) {
@@ -66,6 +73,7 @@ public class AccountServiceOnHashMap implements AccountService {
         return true;
     }
 
+    @Override
     public boolean deleteUser(long userID) {
         System.out.println("AccountServiceOnHashMap - deleteUser " + userID);
         if (usersById.containsKey(userID)) {
