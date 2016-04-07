@@ -1,27 +1,49 @@
-package rest;
+package main;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.json.Json;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "User")
 public class UserProfile {
+    @SuppressWarnings("InstanceVariableNamingConvention")
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull
+
+
+    @Column(name = "login", unique = true)
     private String login;
-    @NotNull
+
+
+    @Column(name = "password")
     private String password;
 
+
+    @Column(name = "email")
     private String email;
+
 
     public UserProfile() {
 
     }
 
-    public UserProfile(@NotNull String login, @NotNull String password, String email) {
+    public UserProfile(@NotNull String login, @NotNull String password, @NotNull String email) {
         this.id = 0;
         this.login = login;
         this.password = password;
         this.email = email;
+    }
+
+    public UserProfile(@NotNull String login, @NotNull String password, @NotNull String email, long id) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.id = id;
     }
 
     public long getId() {
@@ -67,6 +89,16 @@ public class UserProfile {
 
         return login.equals(another.login);
 
+    }
+
+    @Override
+    public String toString() {
+        return Json.createObjectBuilder()
+                .add("id", this.id)
+                .add("login", this.login)
+                .add("email", this.email)
+                .build()
+                .toString();
     }
 
     @Override
