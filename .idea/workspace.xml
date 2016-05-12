@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af2d1218-85ae-4d5c-9f8b-8bf25731ffe1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/services/AccountServiceOnHibernate.java" afterPath="$PROJECT_DIR$/src/main/java/services/AccountServiceOnHibernate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/test/main/AccountServiceTest.java" afterPath="$PROJECT_DIR$/src/main/test/main/AccountServiceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/test/rest/RestTest.java" afterPath="$PROJECT_DIR$/src/main/test/rest/RestTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/services/UserDAO.java" afterPath="$PROJECT_DIR$/src/main/java/services/UserDAO.java" />
     </list>
     <ignored path="BloodyDefense.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,10 +37,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RestTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RestTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/test/rest/RestTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5742251">
+            <state vertical-scroll-proportion="0.0">
               <caret line="51" column="97" selection-start-line="51" selection-start-column="97" selection-end-line="51" selection-end-column="97" />
               <folding />
             </state>
@@ -59,6 +56,16 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#526#527#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/services/AccountService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,35 +90,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserDAO.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserDAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/services/UserDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.7846656">
+              <caret line="68" column="52" selection-start-line="68" selection-start-column="52" selection-end-line="68" selection-end-column="52" />
               <folding>
-                <element signature="e#338#339#0" expanded="true" />
-                <element signature="e#376#377#0" expanded="true" />
+                <element signature="e#518#519#0" expanded="true" />
+                <element signature="e#556#557#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AccountServiceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/test/main/AccountServiceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="97" selection-start-line="29" selection-start-column="8" selection-end-line="30" selection-end-column="97" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SessionServiceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/test/main/SessionServiceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="93" column="78" selection-start-line="93" selection-start-column="78" selection-end-line="93" selection-end-column="78" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -120,17 +107,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/services/AccountServiceOnHibernate.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="77" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="77" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserProfile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/main/UserProfile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="20" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
+              <caret line="19" column="95" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="95" />
               <folding />
             </state>
           </provider>
@@ -188,11 +165,11 @@
         <option value="$PROJECT_DIR$/src/main/java/main/UserProfile.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/AccountServiceOnHashMap.java" />
         <option value="$PROJECT_DIR$/src/main/java/rest/Sessions.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/rest/Users.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/AccountServiceOnHibernate.java" />
         <option value="$PROJECT_DIR$/src/main/test/main/AccountServiceTest.java" />
         <option value="$PROJECT_DIR$/src/main/test/rest/RestTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/UserDAO.java" />
       </list>
     </option>
   </component>
@@ -1236,7 +1213,7 @@
       <workItem from="1460308575622" duration="562000" />
       <workItem from="1460633129855" duration="675000" />
       <workItem from="1460651077901" duration="2072000" />
-      <workItem from="1463054098025" duration="4556000" />
+      <workItem from="1463054098025" duration="5413000" />
     </task>
     <servers />
   </component>
@@ -1273,7 +1250,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102231000" />
+    <option name="totallyTimeSpent" value="103088000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1647,14 +1624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/AccountService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.774194">
@@ -1692,10 +1661,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/rest/Sessions.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/rest/Users.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="1" selection-start-line="80" selection-start-column="1" selection-end-line="80" selection-end-column="1" />
+          <caret line="37" column="37" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/test/rest/RestTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="97" selection-start-line="51" selection-start-column="97" selection-end-line="51" selection-end-column="97" />
           <folding />
         </state>
       </provider>
@@ -1708,31 +1687,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/AccountService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
-          <folding>
-            <element signature="e#338#339#0" expanded="true" />
-            <element signature="e#376#377#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/rest/Users.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="37" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/AccountServiceOnHibernate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="77" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="77" />
+          <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1745,19 +1703,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/test/main/SessionServiceTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/rest/Sessions.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="1" selection-start-line="80" selection-start-column="1" selection-end-line="80" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/test/main/SessionServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.4763458">
           <caret line="93" column="78" selection-start-line="93" selection-start-column="78" selection-end-line="93" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/test/rest/RestTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/AccountServiceOnHibernate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5742251">
-          <caret line="51" column="97" selection-start-line="51" selection-start-column="97" selection-end-line="51" selection-end-column="97" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="95" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="95" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7846656">
+          <caret line="68" column="52" selection-start-line="68" selection-start-column="52" selection-end-line="68" selection-end-column="52" />
+          <folding>
+            <element signature="e#518#519#0" expanded="true" />
+            <element signature="e#556#557#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
