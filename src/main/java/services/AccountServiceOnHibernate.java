@@ -9,6 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import main.UserProfile;
+import org.jetbrains.annotations.TestOnly;
 
 import java.util.List;
 
@@ -27,6 +28,26 @@ public class AccountServiceOnHibernate implements AccountService{
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/BloodyDefenceDB");
         configuration.setProperty("hibernate.connection.username", "bloodydefender");
         configuration.setProperty("hibernate.connection.password", "stargate");
+        configuration.setProperty("hibernate.show_sql", "true");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+
+        configuration.addAnnotatedClass(UserProfile.class);
+
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+        builder.applySettings(configuration.getProperties());
+        ServiceRegistry serviceRegistry = builder.build();
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+    }
+
+    @TestOnly
+    public AccountServiceOnHibernate(String url, String username, String password) {
+        Configuration configuration = new Configuration();
+
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.connection.url", url);
+        configuration.setProperty("hibernate.connection.username", username);
+        configuration.setProperty("hibernate.connection.password", password);
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 

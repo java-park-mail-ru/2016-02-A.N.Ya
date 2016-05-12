@@ -27,7 +27,8 @@ public class AccountServiceTest {
 
     @Before
     public void mySetUp() {
-        accountService = new AccountServiceOnHibernate();
+        accountService = new AccountServiceOnHibernate(
+                "jdbc:mysql://localhost:3306/BloodyDefenceTestDB", "bloodydefender", "stargate");
 
         adminUser = new UserProfile("admin", "admin", "best@awesome_admins.com");
         testUser = new UserProfile("test", "12345", "sg@sg.com");

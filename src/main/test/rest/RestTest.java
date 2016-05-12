@@ -48,7 +48,8 @@ public class RestTest extends JerseyTest {
         loggedUser = new UserProfile("logged", "qwerty", "loh@test.com");
         newUser = new UserProfile("new", "password", "1@newbies.com");
 
-        accountService = new AccountServiceOnHibernate();
+        accountService = new AccountServiceOnHibernate(
+                "jdbc:mysql://localhost:3306/BloodyDefenceTestDB", "bloodydefender", "stargate");
         accountService.addUser(adminUser);
         accountService.addUser(testUser);
         accountService.addUser(loggedUser);
