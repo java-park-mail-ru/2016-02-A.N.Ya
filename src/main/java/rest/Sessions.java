@@ -47,11 +47,16 @@ public class Sessions {
         System.out.println("Sessions - put - login \"" + session.getLogin() + '"');
         final SessionService sessionService = (SessionService) context.get(SessionService.class);
         final AccountService accountService = (AccountService) context.get(AccountService.class);
+
+
         final UserProfile user = accountService.getUser(session.getLogin());
+
+
         if (user == null) {
             System.out.println("No such user");
             return Response.status(Response.Status.NO_CONTENT).build();
         }
+
 
         if ((user != null) && (user.getPassword().equals(session.getPassword()))){
             sessionService.newSession(request.getSession().getId(), user);

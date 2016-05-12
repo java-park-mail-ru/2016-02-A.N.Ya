@@ -24,15 +24,17 @@ public class Users {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(UserProfile user)  throws Exception {
+    public Response createUser(UserProfile user, @Context HttpServletRequest request)  throws Exception {
         System.out.println("Users - put - createUser \"" + user.getLogin() + '"');
         final AccountService accountService = (AccountService) context.get(AccountService.class);
+        final SessionService sessionService = (SessionService) context.get(SessionService.class);
         final long id = accountService.addUser(user);
         if(id != -1){
             String json = Json.createObjectBuilder()
                     .add("id", id)
                     .build()
                     .toString();
+            sessionService.newSession(request.getSession().getId());
             return Response.status(Response.Status.OK).entity(json).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();
@@ -71,6 +73,8 @@ public class Users {
         if (modyfyedUser.equals(sessionUser)
                 && user.getLogin().equals(modyfyedUser.getLogin())) {
             accountService.modifyUser(id, user);
+            sessionService.deleteSession(request.getSession().getId());
+            sessionService.newSession(request.getSession().getId(), user);
             return Response.status(Response.Status.OK).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();
@@ -89,6 +93,7 @@ public class Users {
         if ((sessionUser != null)
                 && (sessionUser.equals(deletingUser))) {
             accountService.deleteUser(id);
+            sessionService.deleteSession(request.getSession().getId());
             return Response.status(Response.Status.OK).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();

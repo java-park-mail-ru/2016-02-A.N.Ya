@@ -45,7 +45,6 @@ public class UserDAO {
         UserProfile oldUser = session.load(UserProfile.class, id);
         oldUser.setPassword(user.getPassword());
         oldUser.setEmail(user.getEmail());
-        session.flush();
         transaction.commit();
     }
 
