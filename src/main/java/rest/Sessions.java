@@ -7,6 +7,7 @@ import services.SessionService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.json.Json;
+import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -21,15 +22,6 @@ import javax.ws.rs.core.Response;
 @Path("/session")
 public class Sessions {
     @Inject private main.Context context;
-
-    //private final AccountService accountService = (AccountService) context.get(AccountService.class);
-    //private final SessionService sessionService = (SessionService) context.get(SessionService.class);
-
-
-    /*public Sessions(main.Context context) {
-        this.accountService = (AccountService) context.get(AccountService.class);
-        this.sessionService = (SessionService) context.get(SessionService.class);
-    }*/
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +50,9 @@ public class Sessions {
         final UserProfile user = accountService.getUser(session.getLogin());
         if (user == null)
             System.out.println("No such user");
+        else
+            return Response.status(Response.Status.NO_CONTENT).build();
+
         if ((user != null) && (user.getPassword().equals(session.getPassword()))){
             sessionService.newSession(request.getSession().getId(), user);
             final String json = Json.createObjectBuilder()

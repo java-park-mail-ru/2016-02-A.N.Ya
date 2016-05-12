@@ -7,6 +7,7 @@ import services.SessionService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.json.Json;
+import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -23,7 +24,7 @@ public class Users {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(UserProfile user){
+    public Response createUser(UserProfile user)  throws Exception {
         System.out.println("Users - put - createUser \"" + user.getLogin() + '"');
         final AccountService accountService = (AccountService) context.get(AccountService.class);
         final long id = accountService.addUser(user);

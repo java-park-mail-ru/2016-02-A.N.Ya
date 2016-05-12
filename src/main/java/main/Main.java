@@ -1,5 +1,7 @@
 package main;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import rest.Sessions;
@@ -17,6 +19,7 @@ import java.util.Set;
 
 
 public class Main {
+    private final static Logger logger = LogManager.getLogger(Main.class);
     private static Context context;
 
     @SuppressWarnings("OverlyBroadThrowsClause")
@@ -29,7 +32,8 @@ public class Main {
             System.exit(1);
         }
 
-        System.out.append("Starting at port: ").append(String.valueOf(port)).append('\n');
+        //System.out.append("Starting at port: ").append(String.valueOf(port)).append('\n');
+        logger.info("Starting at port: " + String.valueOf(port) + '\n');
 
         final Server server = new Server(port);
         final ServletContextHandler contextHandler =

@@ -1,5 +1,8 @@
 package main;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,13 +12,16 @@ import java.util.Map;
 public class Context {
     private final Map<Class, Object> contextMap = new HashMap<>();
 
-    public void add(Class<?> clazz, Object object) {
-        if (!contextMap.containsKey(clazz)) {
-            contextMap.put(clazz, object);
+    public <T> void add(@NotNull Class<T> clazz, @NotNull T object) {
+        if (contextMap.containsKey(clazz)) {
+            throw new IllegalStateException("Context already contains service " + clazz.getName());
         }
+        contextMap.put(clazz, object);
     }
 
-    public Object get(Class<?> clazz) {
-        return contextMap.get(clazz);
+    @Nullable
+    public <T> T get(@NotNull Class<T> clazz) {
+        //noinspection unchecked
+        return (T) contextMap.get(clazz);
     }
 }

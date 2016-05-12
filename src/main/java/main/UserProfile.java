@@ -2,6 +2,7 @@ package main;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.TestOnly;
 
 import javax.json.Json;
 import javax.persistence.*;
@@ -33,12 +34,13 @@ public class UserProfile {
     }
 
     public UserProfile(@NotNull String login, @NotNull String password, @NotNull String email) {
-        this.id = 0;
+        this.id = -1;
         this.login = login;
         this.password = password;
         this.email = email;
     }
 
+    @TestOnly
     public UserProfile(@NotNull String login, @NotNull String password, @NotNull String email, long id) {
         this.login = login;
         this.password = password;

@@ -121,14 +121,14 @@ public class AccountServiceTest {
 
     @Test
     public void modifyUser() {
-        UserProfile modifyedUser = new UserProfile(
+        UserProfile modifiedUser = new UserProfile(
                 testUser.getLogin(),
-                testUser.getPassword() + "_modifyed",
+                testUser.getPassword() + "_modified",
                 testUser.getEmail()
         );
-        boolean result = accountService.modifyUser(testUser.getId(), modifyedUser);
+        boolean result = accountService.modifyUser(testUser.getId(), modifiedUser);
         assertTrue(result);
-        assertTrue(accountService.getAllUsers().contains(modifyedUser));
+        assertTrue(accountService.getAllUsers().contains(modifiedUser));
     }
 
     @Test

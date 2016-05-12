@@ -1,5 +1,7 @@
 package services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,6 +16,7 @@ import java.util.List;
  * Created by morev on 06.04.16.
  */
 public class AccountServiceOnHibernate implements AccountService{
+    private static final Logger logger = LogManager.getLogger(AccountServiceOnHibernate.class);
     private final SessionFactory sessionFactory;
 
     public AccountServiceOnHibernate() {
@@ -104,6 +107,7 @@ public class AccountServiceOnHibernate implements AccountService{
 
     public boolean isConnected() {
         try (Session session = sessionFactory.openSession()) {
+            session.isConnected();
             session.createSQLQuery("SELECT 1").list();
             return true;
         } catch (HibernateException e) {
