@@ -34,7 +34,7 @@ public class Users {
                     .add("id", id)
                     .build()
                     .toString();
-            sessionService.newSession(request.getSession().getId());
+            sessionService.newSession(request.getSession().getId(), user);
             return Response.status(Response.Status.OK).entity(json).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();

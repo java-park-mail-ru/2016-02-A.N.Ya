@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af2d1218-85ae-4d5c-9f8b-8bf25731ffe1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/rest/Sessions.java" afterPath="$PROJECT_DIR$/src/main/java/rest/Sessions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/rest/Users.java" afterPath="$PROJECT_DIR$/src/main/java/rest/Users.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/services/UserDAO.java" afterPath="$PROJECT_DIR$/src/main/java/services/UserDAO.java" />
     </list>
     <ignored path="BloodyDefense.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,8 +28,8 @@
       <file leaf-file-name="Users.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/rest/Users.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43066883">
-              <caret line="26" column="84" selection-start-line="26" selection-start-column="84" selection-end-line="26" selection-end-column="84" />
+            <state vertical-scroll-proportion="0.68189234">
+              <caret line="36" column="72" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1225,7 +1223,7 @@
       <workItem from="1460308575622" duration="562000" />
       <workItem from="1460633129855" duration="675000" />
       <workItem from="1460651077901" duration="2072000" />
-      <workItem from="1463054098025" duration="4053000" />
+      <workItem from="1463054098025" duration="4111000" />
     </task>
     <servers />
   </component>
@@ -1262,7 +1260,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101728000" />
+    <option name="totallyTimeSpent" value="101786000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1742,8 +1740,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/rest/Users.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43066883">
-          <caret line="26" column="84" selection-start-line="26" selection-start-column="84" selection-end-line="26" selection-end-column="84" />
+        <state vertical-scroll-proportion="0.68189234">
+          <caret line="36" column="72" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
