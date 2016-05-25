@@ -1,13 +1,12 @@
 package rest;
 
-import main.UserProfile;
-import services.AccountService;
-import services.SessionService;
+import account.SessionServiceImpl;
+import account.UserProfile;
+import base.AccountService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.json.Json;
-import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -27,7 +26,7 @@ public class Users {
     public Response createUser(UserProfile user, @Context HttpServletRequest request)  throws Exception {
         System.out.println("Users - put - createUser \"" + user.getLogin() + '"');
         final AccountService accountService = (AccountService) context.get(AccountService.class);
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final long id = accountService.addUser(user);
         if(id != -1){
             String json = Json.createObjectBuilder()
@@ -47,7 +46,7 @@ public class Users {
     public Response getUserById(@PathParam("id") long id, @Context HttpServletRequest request) {
         System.out.println("Users - get - getUserById " + id);
         final AccountService accountService = (AccountService) context.get(AccountService.class);
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
         final UserProfile userGet = accountService.getUser(id);
         if (userGet != null && userGet.equals(sessionUser)) {
@@ -65,7 +64,7 @@ public class Users {
     @Produces(MediaType.APPLICATION_JSON)
     public Response modifyUser(UserProfile user, @PathParam("id") long id, @Context HttpServletRequest request){
         final AccountService accountService = (AccountService) context.get(AccountService.class);
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
         final UserProfile modyfyedUser = accountService.getUser(id);
         System.out.println("Users - post - modifyUser \"" + modyfyedUser.getLogin() + '"');
@@ -86,7 +85,7 @@ public class Users {
     public Response deleteUser(@PathParam("id") long id, @Context HttpServletRequest request) {
         System.out.println("Users - delete - deleteUser " + id);
         final AccountService accountService = (AccountService) context.get(AccountService.class);
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
         final UserProfile deletingUser = accountService.getUser(id);
 

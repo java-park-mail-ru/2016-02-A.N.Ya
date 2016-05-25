@@ -1,9 +1,10 @@
 package main;
 
+import account.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
-import services.AccountService;
-import services.AccountServiceOnHibernate;
+import base.AccountService;
+import account.AccountServiceOnHibernate;
 
 import java.util.ArrayList;
 import java.util.Collection;
