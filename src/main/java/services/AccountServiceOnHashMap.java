@@ -1,5 +1,7 @@
 package services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import main.UserProfile;
 
@@ -9,6 +11,7 @@ import java.util.Map;
 
 
 public class AccountServiceOnHashMap implements AccountService {
+    private static final Logger logger = LogManager.getLogger(SessionService.class);
     private volatile long idCounter = 0;
 
     private final Map<Long, UserProfile> usersById = new HashMap<>();
@@ -21,68 +24,68 @@ public class AccountServiceOnHashMap implements AccountService {
 
     @Override
     public Collection<UserProfile> getAllUsers() {
-        System.out.println("AccountServiceOnHashMap - getAllUsers");
+        logger.info("AccountServiceOnHashMap - getAllUsers");
         return usersById.values();
     }
 
     @Override
     @Nullable
     public UserProfile getUser(long userID) {
-        System.out.println("AccountServiceOnHashMap - getUser " + userID);
+        logger.info("AccountServiceOnHashMap - getUser " + userID);
         return usersById.get(userID);
     }
 
     @Override
     @Nullable
     public UserProfile getUser(String login) {
-        System.out.println("AccountServiceOnHashMap - getUser \"" + login + '"');
+        logger.info("AccountServiceOnHashMap - getUser \"" + login + '"');
         return usersByName.get(login);
     }
 
     @Override
     public long addUser(UserProfile user) {
-        System.out.println("AccountServiceOnHashMap - addUser \"" + user.getLogin() + '"');
+        logger.info("AccountServiceOnHashMap - addUser \"" + user.getLogin() + '"');
         if (usersById.containsValue(user)) {
-            System.out.println("    already exists");
+            logger.info("    already exists");
             return -1;
         } else {
             idCounter++;
             user.setId(idCounter);
             usersById.put(idCounter, user);
             usersByName.put(user.getLogin(), user);
-            System.out.println("    added user with id " + idCounter);
+            logger.info("    added user with id " + idCounter);
             return idCounter;
         }
     }
 
     @Override
     public boolean modifyUser(long userID, UserProfile user) {
-        System.out.println("AccountServiceOnHashMap - modifyUser");
+        logger.info("AccountServiceOnHashMap - modifyUser");
         if (!usersById.containsKey(userID)) {
-            System.err.println("    no such user");
+            logger.error("    no such user");
             return false;
         }
         if (!user.getLogin().equals(usersById.get(userID).getLogin())) {
-            System.err.println("    attempt to change login");
+            logger.error("    attempt to change login");
             return false;
         }
         user.setId(userID);
         usersById.replace(userID, user);
         usersByName.replace(user.getLogin(), user);
-        System.err.println("    modyfied");
+        logger.error("    modyfied");
         return true;
     }
 
     @Override
     public boolean deleteUser(long userID) {
-        System.out.println("AccountServiceOnHashMap - deleteUser " + userID);
+        logger.info("AccountServiceOnHashMap - deleteUser " + userID);
         if (usersById.containsKey(userID)) {
             usersByName.remove(usersById.get(userID).getLogin());
             usersById.remove(userID);
-            System.out.println("    user removed");
+            logger.info("    user removed");
             return true;
         } else {
-            System.err.println("    no such user");
+            logger.error("    no such user");
             return false;
         }
     }

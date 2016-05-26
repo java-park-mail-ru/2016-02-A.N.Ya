@@ -32,7 +32,6 @@ public class Main {
             System.exit(1);
         }
 
-        //System.out.append("Starting at port: ").append(String.valueOf(port)).append('\n');
         logger.info("Starting at port: " + String.valueOf(port) + '\n');
 
         final Server server = new Server(port);
@@ -44,7 +43,7 @@ public class Main {
         SessionService sessionService = new SessionService();
 
         if(!accountService.isConnected()) {
-            System.err.println("Couldn't connect to database");
+            logger.error("Couldn't connect to database");
             System.exit(1);
         }
 
@@ -69,7 +68,7 @@ public class Main {
         server.setHandler(contextHandler);
 
         server.start();
-        System.out.println("Server started");
+        logger.info("Server started");
         server.join();
     }
 }

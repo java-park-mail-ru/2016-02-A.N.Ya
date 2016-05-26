@@ -105,6 +105,6 @@ public class UserProfile {
 
     @Override
     public int hashCode() {
-        return login.hashCode();
+        return (id + login + email).hashCode();
     }
 }

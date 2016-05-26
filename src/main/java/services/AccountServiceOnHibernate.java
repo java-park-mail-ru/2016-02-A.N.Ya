@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.hibernate.service.ServiceRegistry;
 import main.UserProfile;
 import org.jetbrains.annotations.TestOnly;
@@ -61,32 +62,79 @@ public class AccountServiceOnHibernate implements AccountService{
 
     @Override
     public UserProfile getUser(long userID) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             UserDAO userDAO = new UserDAO(session);
             return userDAO.getUser(userID);
+        }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
+            return null;
         }
     }
 
     @Override
     public UserProfile getUser(String login) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             UserDAO userDAO = new UserDAO(session);
             return userDAO.getUser(login);
+        }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
+            return null;
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List getAllUsers() {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             UserDAO userDAO = new UserDAO(session);
             return userDAO.getAllUsers();
+        }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
+            return null;
         }
     }
 
     @Override
     public long addUser(UserProfile user) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             UserDAO userDAO = new UserDAO(session);
             if (userDAO.getUser(user.getLogin()) == null) {
                 userDAO.addUser(user);
@@ -95,11 +143,26 @@ public class AccountServiceOnHibernate implements AccountService{
                 return -1;
             }
         }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
+            return -1;
+        }
     }
 
     @Override
     public boolean modifyUser(long userID, UserProfile user) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             user.setId(userID);
             UserDAO userDAO = new UserDAO(session);
             UserProfile oldUser = userDAO.getUser(user.getId());
@@ -111,11 +174,26 @@ public class AccountServiceOnHibernate implements AccountService{
             userDAO.modifyUser(userID, user);
             return true;
         }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
+            return false;
+        }
     }
 
     @Override
     public boolean deleteUser(long userID) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             UserDAO userDAO = new UserDAO(session);
             if (userDAO.getUser(userID) != null) {
                 userDAO.deleteUser(userID);
@@ -124,15 +202,40 @@ public class AccountServiceOnHibernate implements AccountService{
                 return false;
             }
         }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
+            return false;
+        }
     }
 
     public boolean isConnected() {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
             session.isConnected();
             session.createSQLQuery("SELECT 1").list();
             return true;
-        } catch (HibernateException e) {
-            e.printStackTrace();
+        }
+        catch ( HibernateException e ) {
+            logger.error("Database operation failed", e);
+            if (session != null && (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK )) {
+                session.getTransaction().rollback();
+            }
+        }
+        finally {
+            if (session != null) {
+                session.close();
+            }
             return false;
         }
     }

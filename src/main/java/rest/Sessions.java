@@ -1,6 +1,8 @@
 package rest;
 
 import main.UserProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import services.AccountService;
 import services.SessionService;
 
@@ -21,6 +23,7 @@ import javax.ws.rs.core.Response;
 @Singleton
 @Path("/session")
 public class Sessions {
+    private static final Logger logger = LogManager.getLogger(SessionService.class);
     @Inject private main.Context context;
 
     @GET

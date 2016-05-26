@@ -1,6 +1,8 @@
 package rest;
 
 import main.UserProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import services.AccountService;
 import services.SessionService;
 
@@ -19,13 +21,14 @@ import java.util.Collection;
 @Singleton
 @Path("/user")
 public class Users {
+    private static final Logger logger = LogManager.getLogger(SessionService.class);
     @Inject private main.Context context;
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(UserProfile user, @Context HttpServletRequest request)  throws Exception {
-        System.out.println("Users - put - createUser \"" + user.getLogin() + '"');
+        logger.info("Users - put - createUser \"" + user.getLogin() + '"');
         final AccountService accountService = (AccountService) context.get(AccountService.class);
         final SessionService sessionService = (SessionService) context.get(SessionService.class);
         final long id = accountService.addUser(user);
@@ -45,7 +48,7 @@ public class Users {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserById(@PathParam("id") long id, @Context HttpServletRequest request) {
-        System.out.println("Users - get - getUserById " + id);
+        logger.info("Users - get - getUserById " + id);
         final AccountService accountService = (AccountService) context.get(AccountService.class);
         final SessionService sessionService = (SessionService) context.get(SessionService.class);
         final UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
@@ -68,7 +71,7 @@ public class Users {
         final SessionService sessionService = (SessionService) context.get(SessionService.class);
         final UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
         final UserProfile modyfyedUser = accountService.getUser(id);
-        System.out.println("Users - post - modifyUser \"" + modyfyedUser.getLogin() + '"');
+        logger.info("Users - post - modifyUser \"" + modyfyedUser.getLogin() + '"');
 
         if (modyfyedUser.equals(sessionUser)
                 && user.getLogin().equals(modyfyedUser.getLogin())) {
@@ -84,7 +87,7 @@ public class Users {
     @DELETE
     @Path("{id}")
     public Response deleteUser(@PathParam("id") long id, @Context HttpServletRequest request) {
-        System.out.println("Users - delete - deleteUser " + id);
+        logger.info("Users - delete - deleteUser " + id);
         final AccountService accountService = (AccountService) context.get(AccountService.class);
         final SessionService sessionService = (SessionService) context.get(SessionService.class);
         final UserProfile sessionUser = sessionService.getUserById(request.getSession().getId());
@@ -107,7 +110,7 @@ public class Users {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
-        System.out.println("Users - get - getAllUsers");
+        logger.info("Users - get - getAllUsers");
         final AccountService accountService = (AccountService) context.get(AccountService.class);
         final Collection<UserProfile> allUsers = accountService.getAllUsers();
         return Response.status(Response.Status.OK).entity(allUsers.toArray(new UserProfile[allUsers.size()])).build();
