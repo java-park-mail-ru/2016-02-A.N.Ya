@@ -1,15 +1,15 @@
 package rest;
 
-import main.UserProfile;
+
+import account.SessionServiceImpl;
+import account.UserProfile;
+import base.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import services.AccountService;
-import services.SessionService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.json.Json;
-import javax.json.JsonException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -23,14 +23,14 @@ import javax.ws.rs.core.Response;
 @Singleton
 @Path("/session")
 public class Sessions {
-    private static final Logger logger = LogManager.getLogger(SessionService.class);
+    private static final Logger logger = LogManager.getLogger(Sessions.class);
     @Inject private main.Context context;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response isLogged(@Context HttpServletRequest request) {
         System.out.println("Sessions - get - isLogged \"" + request.getSession().getId() + '"');
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final String id = request.getSession().getId();
         final UserProfile user = sessionService.getUserById(id);
         if (user == null) {
@@ -48,7 +48,7 @@ public class Sessions {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserProfile session, @Context HttpServletRequest request){
         System.out.println("Sessions - put - login \"" + session.getLogin() + '"');
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final AccountService accountService = (AccountService) context.get(AccountService.class);
 
 
@@ -76,7 +76,7 @@ public class Sessions {
     @DELETE
     public Response logout(@Context HttpServletRequest request){
         System.out.println("Sessions - delete - logout");
-        final SessionService sessionService = (SessionService) context.get(SessionService.class);
+        final SessionServiceImpl sessionService = (SessionServiceImpl) context.get(SessionServiceImpl.class);
         final String id = request.getSession().getId();
         sessionService.deleteSession(id);
         return Response.status(Response.Status.OK).build();

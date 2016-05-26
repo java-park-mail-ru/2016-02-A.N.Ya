@@ -1,8 +1,9 @@
 package main;
 
+import account.SessionServiceImpl;
+import account.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
-import services.SessionService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  * Created by morev on 06.04.16.
  */
 public class SessionServiceTest {
-    private SessionService sessionService;
+    private SessionServiceImpl sessionService;
 
     private Map<String, UserProfile> sessions;
 
@@ -29,7 +30,7 @@ public class SessionServiceTest {
 
     @Before
     public void mySetUp() {
-        sessionService = new SessionService();
+        sessionService = new SessionServiceImpl();
 
         sessionIdAdmin = "sessionIdAdmin";
         sessionId1 = "sessionId1";

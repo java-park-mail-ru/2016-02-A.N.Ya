@@ -1,15 +1,15 @@
 package rest;
 
 import main.Context;
-import main.UserProfile;
+import account.UserProfile;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Before;
 import org.junit.Test;
-import services.AccountService;
-import services.AccountServiceOnHibernate;
-import services.SessionService;
+import base.AccountService;
+import account.AccountServiceOnHibernate;
+import account.SessionServiceImpl;
 
 import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
  */
 public class RestTest extends JerseyTest {
     private AccountService accountService;
-    private SessionService sessionService;
+    private SessionServiceImpl sessionService;
 
 
     private UserProfile adminUser;
@@ -54,11 +54,11 @@ public class RestTest extends JerseyTest {
         accountService.addUser(testUser);
         accountService.addUser(loggedUser);
 
-        sessionService = new SessionService();
+        sessionService = new SessionServiceImpl();
 
         Context context = new Context();
         context.add(AccountService.class, accountService);
-        context.add(SessionService.class, sessionService);
+        context.add(SessionServiceImpl.class, sessionService);
 
         Set<Class<?>> classes = new HashSet<>();
         classes.add(Users.class);
@@ -80,7 +80,7 @@ public class RestTest extends JerseyTest {
             @Override
             protected void configure() {
                 bind(accountService).to(AccountService.class);
-                bind(sessionService).to(SessionService.class);
+                bind(sessionService).to(SessionServiceImpl.class);
                 bind(request).to(HttpServletRequest.class);
                 bind(session).to(HttpSession.class);
                 when(request.getSession()).thenReturn(session);
